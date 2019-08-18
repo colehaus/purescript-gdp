@@ -1,6 +1,12 @@
 module GDP.Named (Defn, Named, defn, name, name2, name3, unName) where
 
+import Prelude
+
 newtype Named name a = MkNamed a
+instance showNamed :: Show a => Show (Named name a) where
+  show (MkNamed a) = "(MkNamed " <> show a <> ")"
+derive newtype instance eqNamed :: Eq a => Eq (Named name a)
+derive newtype instance ordNamed :: Ord a => Ord (Named name a)
 
 name :: forall a t. a -> (forall name. Named name a -> t) -> t
 name a k = k (MkNamed a)
